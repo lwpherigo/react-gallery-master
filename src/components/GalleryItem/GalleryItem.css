@@ -1,0 +1,21 @@
+.container {
+    position: relative;
+    text-align: center;
+}
+
+.isShowing {
+    position: center;
+}
+
+.isHidden {
+    height: 0;
+    overflow: hidden;
+}
+
+p {
+    background: rgb(202, 171, 171);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

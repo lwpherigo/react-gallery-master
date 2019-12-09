@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
-import GalleryItem from '../GalleryItem/GalleryItem'
+import GalleryList from '../GalleryList/GalleryList'
 
 class App extends Component {
   state = {
-    galleryItems: []
+    galleryItems: [],
+    numOfLikes: 0,
+  }
+
+  componentDidMount() {
+    this.getGalleryPics();
   }
 
   getGalleryPics = () => {
@@ -15,7 +20,24 @@ class App extends Component {
     })
     .then((response) => {
       this.setState({
-        gallery: response.data
+        galleryItems: response.data
+      },() => {
+        console.log(this.state);
+      });
+    })
+    .catch((err) => {
+      console.warn(err);
+    })
+  }
+
+  putLikes = (id) => {
+    axios({
+      method: 'PUT',
+      url: 'gallery/like/' + id,
+    })
+    .then((response) => {
+      this.setState({
+        numOfLikes: response.data
       },() => {
         console.log(this.state);
       });
@@ -30,8 +52,9 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Gallery of my life</h1>
+          <h6>Likes: {this.state.numOfLikes}</h6>
         </header>
-        <GalleryItem items={this.state.galleryItems} />
+        <GalleryList galleryItems={this.state.galleryItems} />
       </div>
     );
   }
